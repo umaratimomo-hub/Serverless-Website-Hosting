@@ -1,8 +1,6 @@
 # Production-Ready Static Website on AWS with Cloudflare
 
-A production-style static website deployment demonstrating how to combine **Amazon S3**, **Amazon CloudFront**, **AWS Certificate Manager (ACM)**, **Cloudflare**, and **GitHub Actions** to deliver a secure, highly available, and globally cached website.
-
-> **Note:** Cloudflare was used for DNS and domain management instead of Amazon Route 53.
+A production-style static website deployment demonstrating how to combine **Amazon S3**, **Amazon CloudFront**, **AWS Certificate Manager (ACM)**, and **Cloudflare** to deliver a secure, highly available, and globally cached website.
 
 ## Architecture
 
@@ -43,7 +41,6 @@ The deployment provides:
 * HTTPS using AWS Certificate Manager
 * DNS management through Cloudflare
 * CloudFront caching and compression
-* Automated deployments using GitHub Actions
 * CloudFront cache invalidation after deployments
 
 ## AWS Services Used
@@ -54,7 +51,6 @@ The deployment provides:
 | **Amazon CloudFront**       | Global CDN, caching, compression, and HTTPS delivery   |
 | **AWS Certificate Manager** | Provides the SSL/TLS certificate for the custom domain |
 | **Cloudflare**              | DNS and domain management                              |
-| **GitHub Actions**          | Automates website deployments to S3                    |
 
 ## Deployment Architecture
 
@@ -99,7 +95,7 @@ For CloudFront, the ACM certificate must be created in the **US East (N. Virgini
 
 ### 4. Cloudflare DNS
 
-Instead of Route 53, **Cloudflare** was used to manage the domain's DNS records.
+Instead of Route 53, **Cloudflare** was used to manage the domain's DNS records owing to the fact it was already managed.
 
 The domain was configured to resolve to the CloudFront distribution.
 
@@ -144,45 +140,6 @@ User receives updated content
 
 This demonstrates an important consideration when deploying static websites behind a CDN: **the origin can be updated without the cached version immediately changing at the edge.**
 
-## CI/CD with GitHub Actions
-
-A GitHub Actions workflow was added to automate website deployments.
-
-The deployment process follows:
-
-```text
-Developer
-    │
-    ▼
-GitHub Repository
-    │
-    ▼
-GitHub Actions
-    │
-    ├── Sync website files
-    │
-    ▼
-Amazon S3
-    │
-    ▼
-CloudFront Invalidation
-    │
-    ▼
-Updated Website
-```
-
-This removes the need to manually upload website files to S3 after every change.
-
-## Deployment Workflow
-
-A typical deployment consists of:
-
-1. Developer pushes changes to GitHub.
-2. GitHub Actions starts the deployment workflow.
-3. Website files are synchronized to the S3 bucket.
-4. CloudFront cache is invalidated.
-5. CloudFront retrieves the updated files from S3.
-6. Users receive the latest version of the website.
 
 ## Security Considerations
 
@@ -193,45 +150,7 @@ The project also demonstrates several production-oriented security concepts:
 * CloudFront used as the public delivery layer
 * DNS managed through Cloudflare
 * AWS credentials stored as GitHub Actions secrets rather than committed to the repository
-* Minimal deployment permissions for the CI/CD identity
 * CDN caching to reduce direct load on the S3 origin
-
-## Key DevOps Concepts Demonstrated
-
-### Infrastructure and Hosting
-
-* AWS S3 static website hosting
-* CDN architecture
-* CloudFront distributions
-* Origin configuration
-* DNS management
-* SSL/TLS certificates
-
-### Performance
-
-* Global edge caching
-* CloudFront cache policies
-* Object compression
-* Cache invalidation
-
-### Automation
-
-* GitHub Actions
-* Automated S3 deployments
-* Automated CloudFront invalidation
-* Secrets management
-
-### Troubleshooting
-
-The project also provided practical experience with:
-
-* DNS resolution
-* CloudFront distribution configuration
-* HTTPS certificate validation
-* S3 website hosting
-* CDN caching behavior
-* Cache invalidation
-* CI/CD deployment failures
 
 ## What I Learned
 
@@ -249,17 +168,11 @@ Potential improvements include:
 
 * Add security headers using CloudFront Functions
 * Implement stricter S3 bucket access controls
-* Add automated testing before deployment
 * Add cache-control headers for different asset types
-* Add monitoring and alerting
 * Add Infrastructure as Code using Terraform
+* Add a CI/CD pipeline using GitHub Actions → automatic deploy to S3
 * Implement separate development and production environments
+* Add monitoring and alerting
+* Add Lambda@Edge to rewrite URLs
 * Add Cloudflare security and caching features where appropriate
 
-## Project Outcome
-
-The completed project demonstrates an end-to-end DevOps workflow for deploying a static website with:
-
-**GitHub → GitHub Actions → S3 → CloudFront → Cloudflare DNS → End Users**
-
-It combines cloud hosting, CDN delivery, DNS, HTTPS, caching, and CI/CD automation into a single production-oriented deployment.
