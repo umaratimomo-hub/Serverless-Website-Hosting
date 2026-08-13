@@ -1,4 +1,3 @@
-# Serverless-Website-Hosting
 # Production-Ready Static Website on AWS with Cloudflare
 
 A production-style static website deployment demonstrating how to combine **Amazon S3**, **Amazon CloudFront**, **AWS Certificate Manager (ACM)**, **Cloudflare**, and **GitHub Actions** to deliver a secure, highly available, and globally cached website.
