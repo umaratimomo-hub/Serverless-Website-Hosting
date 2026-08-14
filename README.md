@@ -65,7 +65,11 @@ index.html
 error.html
 ```
 
+<p align="left"> <img width="1000" src="./Images/files uploaded s3.png"> </p>
+
 Static website hosting was enabled, allowing S3 to serve the website content.
+
+<p align="left"> <img width="1000" src="./Images/s3 static web hosting enabled.png"> </p>
 
 The website's static assets are stored in S3 while CloudFront acts as the public distribution layer.
 
@@ -82,6 +86,13 @@ Configuration included:
 * `GET` and `HEAD` methods allowed
 * Custom domain configured
 * ACM SSL/TLS certificate attached
+
+<p align="left"> <img width="1000" src="./Images/cloudfront distribution created.png"> </p>
+
+<p align="left"> <img width="1000" src="./Images/cloudfront distribution behaviour settings.png"> </p>
+
+<p align="left"> <img width="1000" src="./Images/cloudfront distribution settings updated with cert.png"> </p>
+
 
 CloudFront provides global edge caching so users can retrieve content from an edge location closer to them rather than directly from the S3 origin.
 
