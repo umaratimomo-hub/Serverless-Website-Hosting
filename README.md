@@ -2,6 +2,17 @@
 
 A production-style static website deployment demonstrating how to combine **Amazon S3**, **Amazon CloudFront**, **AWS Certificate Manager (ACM)**, and **Cloudflare** to deliver a secure, highly available, and globally cached website.
 
+---
+## Demo of serverless website
+
+
+
+<p align="left"> <img width="800" src="./Images/bucket contents showing via custom domain.png"> </p>
+
+*Screenshot of serverless website with custom domain name*
+
+---
+
 ## Architecture
 
 ```text
@@ -30,6 +41,8 @@ A production-style static website deployment demonstrating how to combine **Amaz
                          └──────────────────┘
 ```
 
+---
+
 ## Project Objectives
 
 The goal of this project was to deploy a static website using AWS services while applying production-oriented DevOps practices.
@@ -43,6 +56,8 @@ The deployment provides:
 * CloudFront caching and compression
 * CloudFront cache invalidation after deployments
 
+---
+
 ## AWS Services Used
 
 | Service                     | Purpose                                                |
@@ -51,6 +66,9 @@ The deployment provides:
 | **Amazon CloudFront**       | Global CDN, caching, compression, and HTTPS delivery   |
 | **AWS Certificate Manager** | Provides the SSL/TLS certificate for the custom domain |
 | **Cloudflare**              | DNS and domain management                              |
+
+---
+
 
 ## Deployment Architecture
 
@@ -89,12 +107,13 @@ Configuration included:
 
 <p align="left"> <img width="1000" src="./Images/cloudfront distribution created.png"> </p>
 
-<p align="left"> <img width="1000" src="./Images/cloudfront distribution behaviour settings.png"> </p>
+<p align="left"> <img width="1000" src="./Images/cloudfront distribution behavior settings.png"> </p>
 
 <p align="left"> <img width="1000" src="./Images/cloudfront distribution settings updated with cert.png"> </p>
 
 
 CloudFront provides global edge caching so users can retrieve content from an edge location closer to them rather than directly from the S3 origin.
+
 
 ### 3. AWS Certificate Manager
 
@@ -103,6 +122,9 @@ An ACM certificate was created for the custom domain and associated with the Clo
 This enables HTTPS access to the website.
 
 For CloudFront, the ACM certificate must be created in the **US East (N. Virginia) / `us-east-1`** region.
+
+<p align="left"> <img width="1000" src="./Images/cert issued.png"> </p>
+
 
 ### 4. Cloudflare DNS
 
@@ -125,7 +147,12 @@ CloudFront
 S3
 ```
 
+<p align="left"> <img width="1000" src="./Images/anaqahwear.com cloudflare DNS info.png"> </p>
+
 Cloudflare handles DNS resolution while CloudFront handles CDN delivery, caching, and HTTPS.
+
+---
+
 
 ## Caching Demonstration
 
@@ -149,7 +176,11 @@ CloudFront removes cached object
 User receives updated content
 ```
 
+<p align="left"> <img width="1000" src="./Images/cloudfront invalidation creation.png"> </p>
+
 This demonstrates an important consideration when deploying static websites behind a CDN: **the origin can be updated without the cached version immediately changing at the edge.**
+
+---
 
 
 ## Security Considerations
@@ -163,6 +194,9 @@ The project also demonstrates several production-oriented security concepts:
 * AWS credentials stored as GitHub Actions secrets rather than committed to the repository
 * CDN caching to reduce direct load on the S3 origin
 
+---
+
+
 ## What I Learned
 
 This project demonstrated how a relatively simple static website can be deployed using a production-style architecture rather than being served directly from a single server.
@@ -172,6 +206,9 @@ The key architecture principle is:
 > **S3 provides the storage/origin, CloudFront provides global delivery and HTTPS, and Cloudflare provides DNS management.**
 
 The addition of GitHub Actions turns the infrastructure into an automated deployment workflow, allowing changes pushed to the repository to be automatically deployed and distributed through CloudFront.
+
+---
+
 
 ## Future Improvements
 
